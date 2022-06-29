@@ -1,19 +1,14 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Routes } from "./src/routes";
 
 export default function App() {
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <SafeAreaProvider>
+      {/* eslint-disable-next-line react/style-prop-object */}
       <StatusBar style="auto" />
-    </View>
+      <Routes />
+    </SafeAreaProvider>
   );
 }

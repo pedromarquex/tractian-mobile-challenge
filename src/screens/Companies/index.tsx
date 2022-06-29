@@ -1,11 +1,11 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { SafeAreaView, Text } from "react-native";
 
 function Companies() {
   return (
-    <View>
+    <SafeAreaView>
       <Text>Companies</Text>
-    </View>
+    </SafeAreaView>
   );
 }
 
