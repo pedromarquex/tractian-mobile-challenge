@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { List } from "@ant-design/react-native";
+import { ActivityIndicator, List } from "@ant-design/react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { SafeAreaContainer } from "../../components/SafeAreaContainer";
 import { ScrollViewContainer } from "../../components/ScrollViewContainer";
@@ -22,8 +22,10 @@ function Units(): JSX.Element {
   const route = useRoute();
   const { companyId, companyName } = route.params as IUnitsProps;
   const [units, setUnits] = useState<IUnit[]>([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function loadUnits() {
+      setLoading(true);
       const response = await api.get(`/units`);
 
       const filteredUnits = response.data.filter(
@@ -31,6 +33,7 @@ function Units(): JSX.Element {
       );
 
       setUnits(filteredUnits);
+      setLoading(false);
     }
 
     loadUnits();
@@ -42,25 +45,28 @@ function Units(): JSX.Element {
     <SafeAreaContainer>
       <ScrollViewContainer>
         <S.TitleText>Unidades da {companyName}</S.TitleText>
-
-        <List>
-          {units.map((unit: IUnit) => (
-            <List.Item
-              key={unit.id}
-              arrow="horizontal"
-              onPress={() => {
-                navigation.navigate("Assets", {
-                  companyId,
-                  companyName,
-                  unitId: unit.id,
-                  unitName: unit.name,
-                });
-              }}
-            >
-              {unit.name}
-            </List.Item>
-          ))}
-        </List>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <List>
+            {units.map((unit: IUnit) => (
+              <List.Item
+                key={unit.id}
+                arrow="horizontal"
+                onPress={() => {
+                  navigation.navigate("Assets", {
+                    companyId,
+                    companyName,
+                    unitId: unit.id,
+                    unitName: unit.name,
+                  });
+                }}
+              >
+                {unit.name}
+              </List.Item>
+            ))}
+          </List>
+        )}
       </ScrollViewContainer>
     </SafeAreaContainer>
   );
