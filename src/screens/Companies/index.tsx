@@ -13,7 +13,6 @@ function Companies() {
     <SafeAreaContainer>
       <ScrollViewContainer>
         <S.TitleText>Empresas</S.TitleText>
-
         <List>
           <List.Item
             arrow="horizontal"
