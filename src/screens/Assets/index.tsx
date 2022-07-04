@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Card, WingBlank } from "@ant-design/react-native";
-import { Image, View } from "react-native";
+import {
+  ActivityIndicator,
+  Card,
+  Icon,
+  WingBlank,
+} from "@ant-design/react-native";
+import { Image, Text, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { SafeAreaContainer } from "../../components/SafeAreaContainer";
 import { ScrollViewContainer } from "../../components/ScrollViewContainer";
@@ -71,30 +77,53 @@ function Assets(): JSX.Element {
         ) : (
           <WingBlank size="lg">
             {assets?.map((asset) => (
-              <Card key={asset.id} style={{ marginBottom: 15 }}>
-                <Card.Header
-                  title={asset.name}
-                  extra={<StatusIcon status={asset.status} />}
-                />
-                <Card.Body>
-                  <View>
-                    <Image
-                      source={{
-                        uri: asset.image,
-                      }}
-                      style={{
-                        width: "100%",
-                        height: 200,
-                        resizeMode: "cover",
-                      }}
-                    />
-                  </View>
-                </Card.Body>
-                <Card.Footer
-                  content={`${asset.healthscore}% de saúde`}
-                  extra={`status: ${getStatus(asset.status)}`}
-                />
-              </Card>
+              <TouchableOpacity key={asset.id}>
+                <Card style={{ marginBottom: 15 }}>
+                  <Card.Header
+                    title={
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            fontWeight: "600",
+                            marginRight: 5,
+                          }}
+                        >
+                          {asset.name}
+                        </Text>
+                        <StatusIcon status={asset.status} />
+                      </View>
+                    }
+                    extra={
+                      <Icon style={{ alignSelf: "flex-end" }} name="right" />
+                    }
+                  />
+                  <Card.Body>
+                    <View>
+                      <Image
+                        source={{
+                          uri: asset.image,
+                        }}
+                        style={{
+                          width: "100%",
+                          height: 200,
+                          resizeMode: "cover",
+                        }}
+                      />
+                    </View>
+                  </Card.Body>
+                  <Card.Footer
+                    content={`${asset.healthscore}% de saúde`}
+                    extra={`status: ${getStatus(asset.status)}`}
+                  />
+                </Card>
+              </TouchableOpacity>
             ))}
           </WingBlank>
         )}

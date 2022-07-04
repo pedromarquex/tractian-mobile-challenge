@@ -9,13 +9,13 @@ function StatusIcon({ status }: StatusIconsPops): JSX.Element | null {
   let iconComponent = null;
   switch (status) {
     case "inAlert":
-      iconComponent = <Icon name="warning" size="lg" color="yellow" />;
+      iconComponent = <Icon name="warning" size="md" color="#f5ce0f" />;
       break;
     case "inOperation":
-      iconComponent = <Icon name="play-circle" size="lg" color="green" />;
+      iconComponent = <Icon name="play-circle" size="md" color="green" />;
       break;
     case "inDowntime":
-      iconComponent = <Icon name="stop" size="lg" color="red" />;
+      iconComponent = <Icon name="stop" size="md" color="red" />;
       break;
     default:
       return null;
