@@ -92,7 +92,7 @@ function Assets(): JSX.Element {
                 </Card.Body>
                 <Card.Footer
                   content={`${asset.healthscore}% de saúde`}
-                  extra={getStatus(asset.status)}
+                  extra={`status: ${getStatus(asset.status)}`}
                 />
               </Card>
             ))}
