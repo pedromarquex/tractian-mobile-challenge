@@ -5,7 +5,7 @@ declare global {
   namespace ReactNavigation {
     interface RootParamList {
       Companies: undefined;
-      Units: undefined;
+      Units: { companyId: number; companyName: string };
       Assets: undefined;
     }
   }

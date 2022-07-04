@@ -34,7 +34,12 @@ function Companies(): JSX.Element {
             <List.Item
               key={company.id}
               arrow="horizontal"
-              onPress={() => navigation.navigate("Units")}
+              onPress={() =>
+                navigation.navigate("Units", {
+                  companyId: company.id,
+                  companyName: company.name,
+                })
+              }
             >
               {company.name}
             </List.Item>
