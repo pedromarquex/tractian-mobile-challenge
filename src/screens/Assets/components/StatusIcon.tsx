@@ -2,7 +2,7 @@ import { Icon } from "@ant-design/react-native";
 import { View } from "react-native";
 
 interface StatusIconsPops {
-  status: "inAlert" | "inOperation" | "InDowntime";
+  status: "inAlert" | "inOperation" | "inDowntime";
 }
 
 function StatusIcon({ status }: StatusIconsPops): JSX.Element | null {
@@ -14,7 +14,7 @@ function StatusIcon({ status }: StatusIconsPops): JSX.Element | null {
     case "inOperation":
       iconComponent = <Icon name="play-circle" size="lg" color="green" />;
       break;
-    case "InDowntime":
+    case "inDowntime":
       iconComponent = <Icon name="stop" size="lg" color="red" />;
       break;
     default:

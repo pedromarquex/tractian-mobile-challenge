@@ -6,7 +6,12 @@ declare global {
     interface RootParamList {
       Companies: undefined;
       Units: { companyId: number; companyName: string };
-      Assets: undefined;
+      Assets: {
+        companyId: number;
+        companyName: string;
+        unitId: number;
+        unitName: string;
+      };
     }
   }
 }

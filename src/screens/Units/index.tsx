@@ -35,7 +35,9 @@ function Units(): JSX.Element {
 
     loadUnits();
   }, [companyId]);
+
   const navigation = useNavigation();
+
   return (
     <SafeAreaContainer>
       <ScrollViewContainer>
@@ -47,7 +49,12 @@ function Units(): JSX.Element {
               key={unit.id}
               arrow="horizontal"
               onPress={() => {
-                navigation.navigate("Assets");
+                navigation.navigate("Assets", {
+                  companyId,
+                  companyName,
+                  unitId: unit.id,
+                  unitName: unit.name,
+                });
               }}
             >
               {unit.name}
