@@ -12,7 +12,7 @@ function StatusIcon({ status }: StatusIconsPops): JSX.Element | null {
       iconComponent = <Icon name="warning" size="lg" color="yellow" />;
       break;
     case "inOperation":
-      iconComponent = <Icon name="play-circle" size="lg" />;
+      iconComponent = <Icon name="play-circle" size="lg" color="green" />;
       break;
     case "InDowntime":
       iconComponent = <Icon name="stop" size="lg" color="red" />;
