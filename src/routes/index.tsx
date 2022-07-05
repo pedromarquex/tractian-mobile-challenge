@@ -12,6 +12,7 @@ declare global {
         unitId: number;
         unitName: string;
       };
+      AssetDetail: undefined;
     }
   }
 }

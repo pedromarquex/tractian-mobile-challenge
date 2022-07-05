@@ -6,7 +6,7 @@ import {
   WingBlank,
 } from "@ant-design/react-native";
 import { Image, Text, View } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { SafeAreaContainer } from "../../components/SafeAreaContainer";
@@ -45,6 +45,7 @@ interface IAsset {
 
 function Assets(): JSX.Element {
   const route = useRoute();
+  const navigation = useNavigation();
   const { companyId, companyName, unitId, unitName } =
     route.params as IAssetProps;
 
@@ -77,7 +78,10 @@ function Assets(): JSX.Element {
         ) : (
           <WingBlank size="lg">
             {assets?.map((asset) => (
-              <TouchableOpacity key={asset.id}>
+              <TouchableOpacity
+                key={asset.id}
+                onPress={() => navigation.navigate("AssetDetail")}
+              >
                 <Card style={{ marginBottom: 15 }}>
                   <Card.Header
                     title={
