@@ -50,7 +50,7 @@ function AssetDetail(): JSX.Element {
           />
           <S.AssetDetailContainer>
             <S.AssetNameText>{asset.name}</S.AssetNameText>
-            {/* <S.DetailText>{asset.metrics?.lastUptimeAt}</S.DetailText> */}
+            <S.DetailText>{asset.model}</S.DetailText>
 
             <S.RowContainer>
               <S.RowItemContainer>
