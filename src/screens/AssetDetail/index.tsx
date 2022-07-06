@@ -61,21 +61,24 @@ function AssetDetail(): JSX.Element {
             <S.DetailTitleText>Temperatura máxima</S.DetailTitleText>
             <S.DetailText>{asset.specifications?.maxTemp}ºC</S.DetailText>
 
-            {asset.specifications?.power !== null &&
-            asset.specifications?.rpm !== null ? (
-              <S.RowContainer>
-                <RowItemContainer>
-                  <S.DetailTitleText>Potência</S.DetailTitleText>
-                  <S.DetailText>
-                    {asset?.specifications?.power} kWh
-                  </S.DetailText>
-                </RowItemContainer>
-                <RowItemContainer>
-                  <S.DetailTitleText>RPM</S.DetailTitleText>
-                  <S.DetailText>{asset?.specifications?.rpm}</S.DetailText>
-                </RowItemContainer>
-              </S.RowContainer>
-            ) : null}
+            <S.RowContainer>
+              {asset.specifications?.power !== null &&
+                asset.specifications?.power !== undefined && (
+                  <RowItemContainer>
+                    <S.DetailTitleText>Potência</S.DetailTitleText>
+                    <S.DetailText>
+                      {asset.specifications?.power} kWh
+                    </S.DetailText>
+                  </RowItemContainer>
+                )}
+              {asset.specifications?.rpm !== null &&
+                asset.specifications?.rpm !== undefined && (
+                  <RowItemContainer>
+                    <S.DetailTitleText>RPM</S.DetailTitleText>
+                    <S.DetailText>{asset.specifications?.rpm}</S.DetailText>
+                  </RowItemContainer>
+                )}
+            </S.RowContainer>
 
             <S.DetailTitleText>Sensores</S.DetailTitleText>
             <S.DetailText>{asset.sensors?.join(", ")}</S.DetailText>
