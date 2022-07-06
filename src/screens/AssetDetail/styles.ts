@@ -38,7 +38,6 @@ export const DetailTitleText = styled.Text`
 
 export const RowContainer = styled.View`
   flex-direction: row;
-  flex: 1;
   width: 100%;
 `;
 
