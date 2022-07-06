@@ -1,13 +1,10 @@
 import styled from "styled-components/native";
 import SafeAreaView from "react-native-safe-area-view";
 
-export const TitleText = styled.Text`
-  margin-left: 10px;
+export const AssetNameText = styled.Text`
   font-size: 20px;
   color: #000;
   font-family: "Inter_600SemiBold";
-  margin-top: 20px;
-  margin-bottom: 15px;
 `;
 
 export const AssetImage = styled.Image`
@@ -19,4 +16,32 @@ export const AssetImage = styled.Image`
 export const SafeAreaContainer = styled(SafeAreaView)`
   background-color: #e1e1e1;
   min-height: 100%;
+`;
+
+export const AssetDetailContainer = styled.View`
+  margin-top: 20px;
+  margin-left: 15px;
+  flex: 1;
+`;
+
+export const DetailText = styled.Text`
+  font-size: 14px;
+  font-family: "Inter_400Regular";
+  color: #71797e;
+`;
+
+export const DetailTitleText = styled.Text`
+  font-size: 16px;
+  font-family: "Inter_600SemiBold";
+  margin-top: 10px;
+`;
+
+export const RowContainer = styled.View`
+  flex-direction: row;
+  flex: 1;
+  width: 100%;
+`;
+
+export const RowItemContainer = styled.View`
+  width: 50%;
 `;

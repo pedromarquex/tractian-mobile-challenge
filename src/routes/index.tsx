@@ -12,7 +12,9 @@ declare global {
         unitId: number;
         unitName: string;
       };
-      AssetDetail: undefined;
+      AssetDetail: {
+        assetId: number;
+      };
     }
   }
 }

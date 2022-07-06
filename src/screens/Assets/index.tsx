@@ -15,32 +15,13 @@ import * as S from "./styles";
 import { StatusIcon } from "./components/StatusIcon";
 import { api } from "../../services/api";
 import { getStatus } from "../../services/status";
+import { IAsset } from "../../models/Asset";
 
 interface IAssetProps {
   companyId: number;
   companyName: string;
   unitId: number;
   unitName: string;
-}
-
-interface IAsset {
-  id: number;
-  sensors: string[];
-  model: string;
-  status: "inAlert" | "inOperation" | "inDowntime";
-  healthscore: number;
-  name: string;
-  image: string;
-  specifications: {
-    maxTemp: number;
-  };
-  metrics: {
-    totalCollectsUptime: number;
-    totalUptime: number;
-    lastUptimeAt: string;
-  };
-  unitId: number;
-  companyId: number;
 }
 
 function Assets(): JSX.Element {
@@ -80,7 +61,9 @@ function Assets(): JSX.Element {
             {assets?.map((asset) => (
               <TouchableOpacity
                 key={asset.id}
-                onPress={() => navigation.navigate("AssetDetail")}
+                onPress={() =>
+                  navigation.navigate("AssetDetail", { assetId: asset.id })
+                }
               >
                 <Card style={{ marginBottom: 15 }}>
                   <Card.Header
