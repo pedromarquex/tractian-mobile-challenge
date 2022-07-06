@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useRoute } from "@react-navigation/native";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { ActivityIndicator } from "@ant-design/react-native";
 import { ScrollViewContainer } from "../../components/ScrollViewContainer";
 import * as S from "./styles";
@@ -15,11 +15,18 @@ interface IAssetDetailProps {
 
 function AssetDetail(): JSX.Element {
   const route = useRoute();
+  const navigation = useNavigation();
   const { assetId } = route.params as IAssetDetailProps;
   console.log(assetId);
 
   const [asset, setAsset] = useState<IAsset>({} as IAsset);
   const [loading, setLoading] = useState(true);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Detalhes do Ativo",
+    });
+  }, []);
 
   useEffect(() => {
     async function loadAsset() {

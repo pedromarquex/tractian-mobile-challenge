@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { ActivityIndicator, List } from "@ant-design/react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { SafeAreaContainer } from "../../components/SafeAreaContainer";
@@ -20,9 +20,18 @@ interface IUnit {
 
 function Units(): JSX.Element {
   const route = useRoute();
+  const navigation = useNavigation();
+
   const { companyId, companyName } = route.params as IUnitsProps;
   const [units, setUnits] = useState<IUnit[]>([]);
   const [loading, setLoading] = useState(true);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: `Unidades de ${companyName}`,
+    });
+  }, [companyName, navigation]);
+
   useEffect(() => {
     async function loadUnits() {
       setLoading(true);
@@ -39,12 +48,9 @@ function Units(): JSX.Element {
     loadUnits();
   }, [companyId]);
 
-  const navigation = useNavigation();
-
   return (
     <SafeAreaContainer>
       <ScrollViewContainer>
-        <S.TitleText>Unidades da {companyName}</S.TitleText>
         {loading ? (
           <ActivityIndicator />
         ) : (

@@ -9,7 +9,7 @@ const { Screen, Navigator } = createStackNavigator();
 
 export function AppStackRoutes(): JSX.Element {
   return (
-    <Navigator screenOptions={{ headerShown: false }}>
+    <Navigator>
       <Screen name="Companies" component={Companies} />
       <Screen name="Units" component={Units} />
       <Screen name="Assets" component={Assets} />

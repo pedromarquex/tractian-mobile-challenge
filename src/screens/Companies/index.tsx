@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, List } from "@ant-design/react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Button } from "react-native";
+import { ActivityIndicator, List } from "@ant-design/react-native";
 import { SafeAreaContainer } from "../../components/SafeAreaContainer";
 import { ScrollViewContainer } from "../../components/ScrollViewContainer";
 
@@ -17,6 +18,13 @@ function Companies(): JSX.Element {
 
   const [companies, setCompanies] = useState<ICompany[]>([]);
   const [loading, setLoading] = useState(true);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Empresas",
+    });
+  }, [navigation]);
+
   useEffect(() => {
     async function loadCompanies() {
       setLoading(true);
@@ -31,7 +39,6 @@ function Companies(): JSX.Element {
   return (
     <SafeAreaContainer>
       <ScrollViewContainer>
-        <S.TitleText>Empresas</S.TitleText>
         {loading ? (
           <ActivityIndicator />
         ) : (

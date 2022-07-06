@@ -6,6 +6,6 @@ export const TitleText = styled.Text`
   color: #000;
   font-family: "Inter_700Bold";
   text-align: center;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 15px;
 `;

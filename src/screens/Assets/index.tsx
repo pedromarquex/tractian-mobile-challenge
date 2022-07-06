@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   ActivityIndicator,
   Card,
@@ -33,6 +33,12 @@ function Assets(): JSX.Element {
   const [assets, setAssets] = useState<IAsset[]>([]);
   const [loading, setLoading] = useState(true);
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Ativos",
+    });
+  }, [navigation]);
+
   useEffect(() => {
     async function loadAssets() {
       setLoading(true);
@@ -51,7 +57,6 @@ function Assets(): JSX.Element {
     <SafeAreaContainer>
       <ScrollViewContainer>
         <S.TitleText>
-          Ativos {"\n"}
           {companyName} | {unitName}
         </S.TitleText>
         {loading ? (
