@@ -3,7 +3,6 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { ActivityIndicator } from "@ant-design/react-native";
 import { ScrollViewContainer } from "../../components/ScrollViewContainer";
 import * as S from "./styles";
-import { RowItemContainer } from "./styles";
 import { IAsset } from "../../models/Asset";
 import { api } from "../../services/api";
 import { getStatus } from "../../services/status";
@@ -17,7 +16,6 @@ function AssetDetail(): JSX.Element {
   const route = useRoute();
   const navigation = useNavigation();
   const { assetId } = route.params as IAssetDetailProps;
-  console.log(assetId);
 
   const [asset, setAsset] = useState<IAsset>({} as IAsset);
   const [loading, setLoading] = useState(true);
@@ -26,7 +24,7 @@ function AssetDetail(): JSX.Element {
     navigation.setOptions({
       headerTitle: "Detalhes do Ativo",
     });
-  }, []);
+  }, [navigation]);
 
   useEffect(() => {
     async function loadAsset() {
@@ -55,14 +53,14 @@ function AssetDetail(): JSX.Element {
             {/* <S.DetailText>{asset.metrics?.lastUptimeAt}</S.DetailText> */}
 
             <S.RowContainer>
-              <RowItemContainer>
+              <S.RowItemContainer>
                 <S.DetailTitleText>Status</S.DetailTitleText>
                 <S.DetailText>{getStatus(asset.status)}</S.DetailText>
-              </RowItemContainer>
-              <RowItemContainer>
+              </S.RowItemContainer>
+              <S.RowItemContainer>
                 <S.DetailTitleText>Saúde</S.DetailTitleText>
                 <S.DetailText>{asset.healthscore}%</S.DetailText>
-              </RowItemContainer>
+              </S.RowItemContainer>
             </S.RowContainer>
 
             <S.DetailTitleText>Temperatura máxima</S.DetailTitleText>
@@ -71,19 +69,19 @@ function AssetDetail(): JSX.Element {
             <S.RowContainer>
               {asset.specifications?.power !== null &&
                 asset.specifications?.power !== undefined && (
-                  <RowItemContainer>
+                  <S.RowItemContainer>
                     <S.DetailTitleText>Potência</S.DetailTitleText>
                     <S.DetailText>
                       {asset.specifications?.power} kWh
                     </S.DetailText>
-                  </RowItemContainer>
+                  </S.RowItemContainer>
                 )}
               {asset.specifications?.rpm !== null &&
                 asset.specifications?.rpm !== undefined && (
-                  <RowItemContainer>
+                  <S.RowItemContainer>
                     <S.DetailTitleText>RPM</S.DetailTitleText>
                     <S.DetailText>{asset.specifications?.rpm}</S.DetailText>
-                  </RowItemContainer>
+                  </S.RowItemContainer>
                 )}
             </S.RowContainer>
 

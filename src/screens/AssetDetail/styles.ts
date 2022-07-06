@@ -32,7 +32,7 @@ export const DetailText = styled.Text`
 
 export const DetailTitleText = styled.Text`
   font-size: 16px;
-  font-family: "Inter_600SemiBold";
+  font-family: "Inter_500Medium";
   margin-top: 10px;
 `;
 

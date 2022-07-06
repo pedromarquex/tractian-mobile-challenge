@@ -12,7 +12,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaContainer } from "../../components/SafeAreaContainer";
 import { ScrollViewContainer } from "../../components/ScrollViewContainer";
 import * as S from "./styles";
-import { StatusIcon } from "./components/StatusIcon";
+import { StatusIcon } from "../../components/StatusIcon";
 import { api } from "../../services/api";
 import { getStatus } from "../../services/status";
 import { IAsset } from "../../models/Asset";
@@ -71,6 +71,7 @@ function Assets(): JSX.Element {
                 }
               >
                 <Card style={{ marginBottom: 15 }}>
+                  {/* TODO REMOVER STYLE INLINE */}
                   <Card.Header
                     title={
                       <View
@@ -83,7 +84,7 @@ function Assets(): JSX.Element {
                         <Text
                           style={{
                             fontSize: 18,
-                            fontWeight: "600",
+                            fontWeight: "400",
                             marginRight: 5,
                           }}
                         >
