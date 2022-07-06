@@ -46,7 +46,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       {/* eslint-disable-next-line react/style-prop-object */}
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       <Routes />
     </SafeAreaProvider>
   );

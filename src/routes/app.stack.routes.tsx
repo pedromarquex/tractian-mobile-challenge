@@ -9,7 +9,14 @@ const { Screen, Navigator } = createStackNavigator();
 
 export function AppStackRoutes(): JSX.Element {
   return (
-    <Navigator>
+    <Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#2563eb",
+        },
+        headerTintColor: "#fff",
+      }}
+    >
       <Screen name="Companies" component={Companies} />
       <Screen name="Units" component={Units} />
       <Screen name="Assets" component={Assets} />
