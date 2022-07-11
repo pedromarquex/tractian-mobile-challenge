@@ -1,8 +1,18 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
+  ActionSheet,
   ActivityIndicator,
+  Button,
   Card,
   Icon,
+  Provider,
   WingBlank,
 } from "@ant-design/react-native";
 import { Image, Text, View } from "react-native";
@@ -33,9 +43,38 @@ function Assets(): JSX.Element {
   const [assets, setAssets] = useState<IAsset[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const showActionSheet = () => {
+    const BUTTONS = ["Relatórios", "Cancel"];
+    ActionSheet.showActionSheetWithOptions(
+      {
+        title: "Opções",
+        options: BUTTONS,
+        cancelButtonIndex: 1,
+      },
+      (buttonIndex: any) => {
+        switch (buttonIndex) {
+          case 0:
+            navigation.navigate("Reports");
+            break;
+          default:
+            break;
+        }
+      }
+    );
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: "Ativos",
+      headerRight: () => (
+        <Icon
+          name="more"
+          size={25}
+          color="#fff"
+          style={{ marginRight: 10 }}
+          onPress={showActionSheet}
+        />
+      ),
     });
   }, [navigation]);
 
@@ -54,74 +93,76 @@ function Assets(): JSX.Element {
   }, [companyId, unitId]);
 
   return (
-    <SafeAreaContainer>
-      <ScrollViewContainer>
-        <S.TitleText>
-          {companyName} | {unitName}
-        </S.TitleText>
-        {loading ? (
-          <ActivityIndicator />
-        ) : (
-          <WingBlank size="lg">
-            {assets?.map((asset) => (
-              <TouchableOpacity
-                key={asset.id}
-                onPress={() =>
-                  navigation.navigate("AssetDetail", { assetId: asset.id })
-                }
-              >
-                <Card style={{ marginBottom: 15 }}>
-                  {/* TODO REMOVER STYLE INLINE */}
-                  <Card.Header
-                    title={
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Text
+    <Provider>
+      <SafeAreaContainer>
+        <ScrollViewContainer>
+          <S.TitleText>
+            {companyName} | {unitName}
+          </S.TitleText>
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <WingBlank size="lg">
+              {assets?.map((asset) => (
+                <TouchableOpacity
+                  key={asset.id}
+                  onPress={() =>
+                    navigation.navigate("AssetDetail", { assetId: asset.id })
+                  }
+                >
+                  <Card style={{ marginBottom: 15 }}>
+                    {/* TODO REMOVER STYLE INLINE */}
+                    <Card.Header
+                      title={
+                        <View
                           style={{
-                            fontSize: 18,
-                            fontWeight: "400",
-                            marginRight: 5,
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            alignItems: "center",
                           }}
                         >
-                          {asset.name}
-                        </Text>
-                        <StatusIcon status={asset.status} />
+                          <Text
+                            style={{
+                              fontSize: 18,
+                              fontWeight: "400",
+                              marginRight: 5,
+                            }}
+                          >
+                            {asset.name}
+                          </Text>
+                          <StatusIcon status={asset.status} />
+                        </View>
+                      }
+                      extra={
+                        <Icon style={{ alignSelf: "flex-end" }} name="right" />
+                      }
+                    />
+                    <Card.Body>
+                      <View>
+                        <Image
+                          source={{
+                            uri: asset.image,
+                          }}
+                          style={{
+                            width: "100%",
+                            height: 200,
+                            resizeMode: "cover",
+                          }}
+                        />
                       </View>
-                    }
-                    extra={
-                      <Icon style={{ alignSelf: "flex-end" }} name="right" />
-                    }
-                  />
-                  <Card.Body>
-                    <View>
-                      <Image
-                        source={{
-                          uri: asset.image,
-                        }}
-                        style={{
-                          width: "100%",
-                          height: 200,
-                          resizeMode: "cover",
-                        }}
-                      />
-                    </View>
-                  </Card.Body>
-                  <Card.Footer
-                    content={`${asset.healthscore}% de saúde`}
-                    extra={`status: ${getStatus(asset.status)}`}
-                  />
-                </Card>
-              </TouchableOpacity>
-            ))}
-          </WingBlank>
-        )}
-      </ScrollViewContainer>
-    </SafeAreaContainer>
+                    </Card.Body>
+                    <Card.Footer
+                      content={`${asset.healthscore}% de saúde`}
+                      extra={`status: ${getStatus(asset.status)}`}
+                    />
+                  </Card>
+                </TouchableOpacity>
+              ))}
+            </WingBlank>
+          )}
+        </ScrollViewContainer>
+      </SafeAreaContainer>
+    </Provider>
   );
 }
 

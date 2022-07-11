@@ -15,6 +15,7 @@ declare global {
       AssetDetail: {
         assetId: number;
       };
+      Reports: undefined;
     }
   }
 }

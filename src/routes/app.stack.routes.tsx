@@ -4,6 +4,7 @@ import Companies from "../screens/Companies";
 import Units from "../screens/Units";
 import Assets from "../screens/Assets";
 import AssetDetail from "../screens/AssetDetail";
+import Reports from "../screens/Reports";
 
 const { Screen, Navigator } = createStackNavigator();
 
@@ -21,6 +22,7 @@ export function AppStackRoutes(): JSX.Element {
       <Screen name="Units" component={Units} />
       <Screen name="Assets" component={Assets} />
       <Screen name="AssetDetail" component={AssetDetail} />
+      <Screen name="Reports" component={Reports} />
     </Navigator>
   );
 }
