@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { AppStackRoutes } from "./app.stack.routes";
+import { IAsset } from "../models/Asset";
 
 declare global {
   namespace ReactNavigation {
@@ -15,7 +16,9 @@ declare global {
       AssetDetail: {
         assetId: number;
       };
-      Reports: undefined;
+      Reports: {
+        assets: IAsset[];
+      };
     }
   }
 }

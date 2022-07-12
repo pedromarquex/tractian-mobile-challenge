@@ -43,7 +43,34 @@ function Assets(): JSX.Element {
   const [assets, setAssets] = useState<IAsset[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const showActionSheet = () => {
+  useEffect(() => {
+    async function loadAssets() {
+      setLoading(true);
+      const response = await api.get(`/assets`);
+      const filteredAssets = response.data.filter((asset: IAsset) => {
+        return asset.unitId === unitId && asset.companyId === companyId;
+      });
+      setAssets(filteredAssets);
+      setLoading(false);
+    }
+
+    loadAssets();
+  }, [companyId, unitId]);
+
+  const handleActionSheetOptionClick = useCallback(
+    (index: number) => {
+      if (index === 0) {
+        const filteredAssets = assets;
+        console.log(filteredAssets);
+        navigation.navigate("Reports", {
+          assets: filteredAssets,
+        });
+      }
+    },
+    [assets, navigation]
+  );
+
+  const showActionSheet = useCallback(() => {
     const BUTTONS = ["Relatórios", "Cancel"];
     ActionSheet.showActionSheetWithOptions(
       {
@@ -51,17 +78,9 @@ function Assets(): JSX.Element {
         options: BUTTONS,
         cancelButtonIndex: 1,
       },
-      (buttonIndex: any) => {
-        switch (buttonIndex) {
-          case 0:
-            navigation.navigate("Reports");
-            break;
-          default:
-            break;
-        }
-      }
+      handleActionSheetOptionClick
     );
-  };
+  }, [handleActionSheetOptionClick]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -77,20 +96,6 @@ function Assets(): JSX.Element {
       ),
     });
   }, [navigation]);
-
-  useEffect(() => {
-    async function loadAssets() {
-      setLoading(true);
-      const response = await api.get(`/assets`);
-      const filteredAssets = response.data.filter((asset: IAsset) => {
-        return asset.unitId === unitId && asset.companyId === companyId;
-      });
-      setAssets(filteredAssets);
-      setLoading(false);
-    }
-
-    loadAssets();
-  }, [companyId, unitId]);
 
   return (
     <Provider>
