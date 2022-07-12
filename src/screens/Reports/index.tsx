@@ -1,39 +1,38 @@
 import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import HighchartsReactNative from "@highcharts/highcharts-react-native";
 
 import { SafeAreaContainer } from "../../components/SafeAreaContainer";
 import { ScrollViewContainer } from "../../components/ScrollViewContainer";
+import { IAsset } from "../../models/Asset";
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    justifyContent: "center",
-    flex: 1,
+    height: 500,
   },
 });
+
+interface IReportsProps {
+  assets: IAsset[];
+}
 
 function Reports(): JSX.Element {
   const navigation = useNavigation();
   const route = useRoute();
-  const { assets } = route.params;
-  // console.log(route.params);
+  const { assets } = route.params as IReportsProps;
 
-  const [chartOptions, setChartOptions] = React.useState(() => {
+  const [healthChartOptions, setHealthChartOptions] = React.useState(() => {
     return {
       series: [
         {
           name: "Saúde",
-          data: [
-            { x: 1, y: 60 },
-            { x: 2, y: 87.2 },
-            { x: 3, y: 97 },
-          ],
+          data: assets.map((asset) => asset.healthscore),
         },
       ],
       title: {
-        text: "Grafico de teste",
+        text: "Saúde dos ativos",
       },
       yAxis: {
         title: {
@@ -44,7 +43,7 @@ function Reports(): JSX.Element {
         title: {
           text: "Ativo",
         },
-        categories: ["Ativo 1", "Ativo 2", "Ativo 3"],
+        categories: assets.map((asset) => asset.name),
       },
     };
   });
@@ -58,12 +57,10 @@ function Reports(): JSX.Element {
   return (
     <SafeAreaContainer>
       <ScrollViewContainer>
-        <View style={styles.container}>
-          <HighchartsReactNative
-            styles={styles.container}
-            options={chartOptions}
-          />
-        </View>
+        <HighchartsReactNative
+          styles={styles.container}
+          options={healthChartOptions}
+        />
       </ScrollViewContainer>
     </SafeAreaContainer>
   );

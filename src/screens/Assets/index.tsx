@@ -60,10 +60,8 @@ function Assets(): JSX.Element {
   const handleActionSheetOptionClick = useCallback(
     (index: number) => {
       if (index === 0) {
-        const filteredAssets = assets;
-        console.log(filteredAssets);
         navigation.navigate("Reports", {
-          assets: filteredAssets,
+          assets,
         });
       }
     },
@@ -95,7 +93,7 @@ function Assets(): JSX.Element {
         />
       ),
     });
-  }, [navigation]);
+  }, [navigation, showActionSheet]);
 
   return (
     <Provider>
