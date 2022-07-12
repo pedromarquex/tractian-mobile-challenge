@@ -69,7 +69,7 @@ function Assets(): JSX.Element {
   );
 
   const showActionSheet = useCallback(() => {
-    const BUTTONS = ["Relatórios", "Cancel"];
+    const BUTTONS = ["Relatórios", "Cancelar"];
     ActionSheet.showActionSheetWithOptions(
       {
         title: "Opções",

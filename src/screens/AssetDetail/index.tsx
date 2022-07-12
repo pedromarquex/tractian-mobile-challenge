@@ -1,6 +1,16 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { ActivityIndicator } from "@ant-design/react-native";
+import {
+  ActionSheet,
+  ActivityIndicator,
+  Icon,
+  Provider,
+} from "@ant-design/react-native";
 import { ScrollViewContainer } from "../../components/ScrollViewContainer";
 import * as S from "./styles";
 import { IAsset } from "../../models/Asset";
@@ -20,11 +30,41 @@ function AssetDetail(): JSX.Element {
   const [asset, setAsset] = useState<IAsset>({} as IAsset);
   const [loading, setLoading] = useState(true);
 
+  const handleActionSheetOptionClick = useCallback(
+    (index: number) => {
+      if (index === 0) {
+        navigation.navigate("EditAsset", { assetId });
+      }
+    },
+    [assetId, navigation]
+  );
+
+  const showActionSheet = useCallback(() => {
+    const BUTTONS = ["Editar Ativo", "Cancelar"];
+    ActionSheet.showActionSheetWithOptions(
+      {
+        title: "Opções",
+        options: BUTTONS,
+        cancelButtonIndex: 1,
+      },
+      handleActionSheetOptionClick
+    );
+  }, [handleActionSheetOptionClick]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: "Detalhes do Ativo",
+      headerRight: () => (
+        <Icon
+          name="more"
+          size={25}
+          color="#fff"
+          style={{ marginRight: 10 }}
+          onPress={showActionSheet}
+        />
+      ),
     });
-  }, [navigation]);
+  }, [navigation, showActionSheet]);
 
   useEffect(() => {
     async function loadAsset() {
@@ -38,76 +78,78 @@ function AssetDetail(): JSX.Element {
   }, [assetId]);
 
   return (
-    <S.SafeAreaContainer>
-      {loading ? (
-        <ActivityIndicator />
-      ) : (
-        <ScrollViewContainer>
-          <S.AssetImage
-            source={{
-              uri: asset.image,
-            }}
-          />
-          <S.AssetDetailContainer>
-            <S.AssetNameText>{asset.name}</S.AssetNameText>
-            <S.DetailText>{asset.model}</S.DetailText>
+    <Provider>
+      <S.SafeAreaContainer>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <ScrollViewContainer>
+            <S.AssetImage
+              source={{
+                uri: asset.image,
+              }}
+            />
+            <S.AssetDetailContainer>
+              <S.AssetNameText>{asset.name}</S.AssetNameText>
+              <S.DetailText>{asset.model}</S.DetailText>
 
-            <S.RowContainer>
-              <S.RowItemContainer>
-                <S.DetailTitleText>Status</S.DetailTitleText>
-                <S.DetailText>{getStatus(asset.status)}</S.DetailText>
-              </S.RowItemContainer>
-              <S.RowItemContainer>
-                <S.DetailTitleText>Saúde</S.DetailTitleText>
-                <S.DetailText>{asset.healthscore}%</S.DetailText>
-              </S.RowItemContainer>
-            </S.RowContainer>
+              <S.RowContainer>
+                <S.RowItemContainer>
+                  <S.DetailTitleText>Status</S.DetailTitleText>
+                  <S.DetailText>{getStatus(asset.status)}</S.DetailText>
+                </S.RowItemContainer>
+                <S.RowItemContainer>
+                  <S.DetailTitleText>Saúde</S.DetailTitleText>
+                  <S.DetailText>{asset.healthscore}%</S.DetailText>
+                </S.RowItemContainer>
+              </S.RowContainer>
 
-            <S.DetailTitleText>Temperatura máxima</S.DetailTitleText>
-            <S.DetailText>{asset.specifications?.maxTemp}ºC</S.DetailText>
+              <S.DetailTitleText>Temperatura máxima</S.DetailTitleText>
+              <S.DetailText>{asset.specifications?.maxTemp}ºC</S.DetailText>
 
-            <S.RowContainer>
-              {asset.specifications?.power !== null &&
-                asset.specifications?.power !== undefined && (
-                  <S.RowItemContainer>
-                    <S.DetailTitleText>Potência</S.DetailTitleText>
-                    <S.DetailText>
-                      {asset.specifications?.power} kWh
-                    </S.DetailText>
-                  </S.RowItemContainer>
-                )}
-              {asset.specifications?.rpm !== null &&
-                asset.specifications?.rpm !== undefined && (
-                  <S.RowItemContainer>
-                    <S.DetailTitleText>RPM</S.DetailTitleText>
-                    <S.DetailText>{asset.specifications?.rpm}</S.DetailText>
-                  </S.RowItemContainer>
-                )}
-            </S.RowContainer>
+              <S.RowContainer>
+                {asset.specifications?.power !== null &&
+                  asset.specifications?.power !== undefined && (
+                    <S.RowItemContainer>
+                      <S.DetailTitleText>Potência</S.DetailTitleText>
+                      <S.DetailText>
+                        {asset.specifications?.power} kWh
+                      </S.DetailText>
+                    </S.RowItemContainer>
+                  )}
+                {asset.specifications?.rpm !== null &&
+                  asset.specifications?.rpm !== undefined && (
+                    <S.RowItemContainer>
+                      <S.DetailTitleText>RPM</S.DetailTitleText>
+                      <S.DetailText>{asset.specifications?.rpm}</S.DetailText>
+                    </S.RowItemContainer>
+                  )}
+              </S.RowContainer>
 
-            <S.DetailTitleText>Sensores</S.DetailTitleText>
-            <S.DetailText>{asset.sensors?.join(", ")}</S.DetailText>
+              <S.DetailTitleText>Sensores</S.DetailTitleText>
+              <S.DetailText>{asset.sensors?.join(", ")}</S.DetailText>
 
-            <S.DetailTitleText>
-              Total de Coletas Uptime(Ligada)
-            </S.DetailTitleText>
-            <S.DetailText>{asset.metrics?.totalCollectsUptime}</S.DetailText>
+              <S.DetailTitleText>
+                Total de Coletas Uptime(Ligada)
+              </S.DetailTitleText>
+              <S.DetailText>{asset.metrics?.totalCollectsUptime}</S.DetailText>
 
-            <S.DetailTitleText>
-              Total de Horas de Coletas Uptime(Ligada)
-            </S.DetailTitleText>
-            <S.DetailText>{asset.metrics?.totalUptime}</S.DetailText>
+              <S.DetailTitleText>
+                Total de Horas de Coletas Uptime(Ligada)
+              </S.DetailTitleText>
+              <S.DetailText>{asset.metrics?.totalUptime}</S.DetailText>
 
-            <S.DetailTitleText>
-              Data da Ultima Coleta Uptime(Ligada)
-            </S.DetailTitleText>
-            <S.DetailText>
-              {parseDateTime(asset.metrics?.lastUptimeAt)}
-            </S.DetailText>
-          </S.AssetDetailContainer>
-        </ScrollViewContainer>
-      )}
-    </S.SafeAreaContainer>
+              <S.DetailTitleText>
+                Data da Ultima Coleta Uptime(Ligada)
+              </S.DetailTitleText>
+              <S.DetailText>
+                {parseDateTime(asset.metrics?.lastUptimeAt)}
+              </S.DetailText>
+            </S.AssetDetailContainer>
+          </ScrollViewContainer>
+        )}
+      </S.SafeAreaContainer>
+    </Provider>
   );
 }
 

@@ -16,6 +16,9 @@ declare global {
       AssetDetail: {
         assetId: number;
       };
+      EditAsset: {
+        assetId: number;
+      };
       Reports: {
         assets: IAsset[];
       };
