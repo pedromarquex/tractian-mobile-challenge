@@ -12,6 +12,7 @@ import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 import "react-native-gesture-handler";
 
+import { LogBox } from "react-native";
 import { Routes } from "./src/routes";
 
 export default function App() {
@@ -30,6 +31,11 @@ export default function App() {
   }
 
   useEffect(() => {
+    LogBox.ignoreLogs([
+      "expo-app-loading is deprecated",
+      "ViewPropTypes will be removed",
+      "Please instead use `remove()` on the subscription",
+    ]);
     loadFonts();
   }, []);
 
