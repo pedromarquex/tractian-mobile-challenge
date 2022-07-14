@@ -1,7 +1,8 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { ActivityIndicator, Button } from "@ant-design/react-native";
+import { ActivityIndicator } from "@ant-design/react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import DropDownPicker from "react-native-dropdown-picker";
+import * as ImagePicker from "expo-image-picker";
 
 import * as S from "./styles";
 import { SafeAreaContainer } from "../../components/SafeAreaContainer";
@@ -13,6 +14,7 @@ import { parseDateTime } from "../../services/parseDate";
 function EditAsset(): JSX.Element {
   const [loading, setLoading] = useState(true);
   const [asset, setAsset] = useState<IAsset>({} as IAsset);
+  const [photo, setPhoto] = useState(null);
 
   const [statusOpen, setStatusOpen] = useState(false);
   const [statusValue, setStatusValue] = useState(null);
@@ -54,6 +56,19 @@ function EditAsset(): JSX.Element {
     loadAsset();
   }, [assetId]);
 
+  async function handleImagePicker(): Promise<void> {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setPhoto(result);
+    }
+  }
+
   return (
     <SafeAreaContainer>
       <ScrollViewContainer>
@@ -61,6 +76,19 @@ function EditAsset(): JSX.Element {
           <ActivityIndicator />
         ) : (
           <S.FormContainer>
+            {/* foto do ativo */}
+            <S.ImageContainer>
+              {!photo ? (
+                <S.IconTouchable onPress={handleImagePicker}>
+                  <S.ImageIcon />
+                </S.IconTouchable>
+              ) : (
+                <S.SelectedImage source={{ uri: photo.uri }} />
+              )}
+            </S.ImageContainer>
+            <S.LargeButton onPress={handleImagePicker}>
+              {!photo ? "Escolher foto" : "Escolher novamente"}
+            </S.LargeButton>
             <S.InputLabel>Nome do ativo</S.InputLabel>
             <S.Input value={asset.name} placeholder="Motor HD-25" />
             <S.InputLabel>Status</S.InputLabel>
@@ -117,8 +145,9 @@ function EditAsset(): JSX.Element {
               value={parseDateTime(asset.metrics.lastUptimeAt)}
               placeholder="25 de Abril de 2020 às 13:00"
             />
-
-            <Button>Salvar</Button>
+            <S.SaveButton onPress={() => navigation.goBack()}>
+              Salvar
+            </S.SaveButton>
           </S.FormContainer>
         )}
       </ScrollViewContainer>
