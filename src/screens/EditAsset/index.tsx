@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { ActivityIndicator } from "@ant-design/react-native";
+import { ActivityIndicator, Button } from "@ant-design/react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import DropDownPicker from "react-native-dropdown-picker";
 
@@ -117,6 +117,8 @@ function EditAsset(): JSX.Element {
               value={parseDateTime(asset.metrics.lastUptimeAt)}
               placeholder="25 de Abril de 2020 às 13:00"
             />
+
+            <Button>Salvar</Button>
           </S.FormContainer>
         )}
       </ScrollViewContainer>

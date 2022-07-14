@@ -42,7 +42,10 @@ export default function App() {
       NOTHING_TO_SHOW: "Selecione",
       PLACEHOLDER: "Selecione",
       SEARCH_PLACEHOLDER: "Digite para buscar",
-      SELECTED_ITEMS_COUNT_TEXT: "{count} itens selecionados",
+      SELECTED_ITEMS_COUNT_TEXT: {
+        1: "1 item selecionado",
+        n: "{count} itens selecionados",
+      },
     });
 
     DropDownPicker.setLanguage("PT");
