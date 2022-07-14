@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 
 export const FormContainer = styled.View`
-  margin: 30px 30px 0 30px;
+  margin: 20px 30px 0 30px;
 `;
 
 export const InputLabel = styled.Text`

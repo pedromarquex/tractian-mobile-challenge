@@ -11,8 +11,9 @@ import {
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 import "react-native-gesture-handler";
-
 import { LogBox } from "react-native";
+import DropDownPicker from "react-native-dropdown-picker";
+
 import { Routes } from "./src/routes";
 
 export default function App() {
@@ -36,6 +37,15 @@ export default function App() {
       "ViewPropTypes will be removed",
       "Please instead use `remove()` on the subscription",
     ]);
+
+    DropDownPicker.addTranslation("PT", {
+      NOTHING_TO_SHOW: "Selecione",
+      PLACEHOLDER: "Selecione",
+      SEARCH_PLACEHOLDER: "Digite para buscar",
+      SELECTED_ITEMS_COUNT_TEXT: "{count} itens selecionados",
+    });
+
+    DropDownPicker.setLanguage("PT");
     loadFonts();
   }, []);
 

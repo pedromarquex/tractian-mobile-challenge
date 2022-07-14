@@ -23,7 +23,7 @@ function EditAsset(): JSX.Element {
   ]);
 
   const [sensorsOpen, setSensorsOpen] = useState(false);
-  const [sensorsValue, setSensorsValue] = useState(null);
+  const [sensorsValue, setSensorsValue] = useState([]);
   const [sensorsItems, setSensorsItems] = useState([
     { label: "GSJ1535", value: "GSJ1535" },
     { label: "IBS1636", value: "IBS1636" },
@@ -65,7 +65,7 @@ function EditAsset(): JSX.Element {
             <S.Input value={asset.name} placeholder="Motor HD-25" />
             <S.InputLabel>Status</S.InputLabel>
             <DropDownPicker
-              style={{ borderWidth: 0 }}
+              style={{ borderWidth: 0, marginBottom: 10 }}
               open={statusOpen}
               value={statusValue}
               items={statusItems}
@@ -89,7 +89,7 @@ function EditAsset(): JSX.Element {
             />
             <S.InputLabel>Sensores</S.InputLabel>
             <DropDownPicker
-              style={{ borderWidth: 0 }}
+              style={{ borderWidth: 0, marginBottom: 10 }}
               open={sensorsOpen}
               value={sensorsValue}
               items={sensorsItems}
