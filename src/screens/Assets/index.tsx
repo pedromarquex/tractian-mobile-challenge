@@ -114,7 +114,6 @@ function Assets(): JSX.Element {
                   }
                 >
                   <Card style={{ marginBottom: 15 }}>
-                    {/* TODO REMOVER STYLE INLINE */}
                     <Card.Header
                       title={
                         <View

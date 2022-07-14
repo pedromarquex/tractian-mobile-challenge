@@ -20,7 +20,6 @@ function StatusIcon({ status }: StatusIconsPops): JSX.Element | null {
     default:
       return null;
   }
-  // TODO REMOVER STYLE INLINE
   return <View style={{ alignItems: "flex-end" }}>{iconComponent}</View>;
 }
 
